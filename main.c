@@ -46,6 +46,22 @@ void drawEntity(struct entity e, int y0, int x0){ // shortcut for drawing an ent
     } 
 }
 
+int lengthEntity(struct entity *arrayPtr) { // returns the length of an array of entities
+    return sizeof(arrayPtr)/sizeof(struct entity);
+}
+
+void remove(int index, struct entity *arrayPtr) { // moves every element back by one index after given index, basically removes the element at the given index
+    int i;
+    for (i = index; i < lengthEntity(arrayPtr); i++){
+        arrayPtr[i] = arrayPtr[i+1];
+    }
+}
+
+void removeFromEntityArrayByID(int index, struct entity *arrayPtr) { // removes an element based on index and reduces the size of the array
+    remove(index, arrayPtr);
+    arrayPtr = (struct entity*) realloc(arrayPtr, sizeof(arrayPtr) - sizeof(struct entity));
+}
+
 int main() {
     char c;     // stores input as a single ASCII character
     c = '\0';   // sets a temporary null value as the input so the first iteration in the while loop doesn't bug out
@@ -55,11 +71,12 @@ int main() {
 
     // const height, width = getmaxy(stdscr), getmaxx(stdscr);
     // WINDOW *playArea = newpad(height, width);
-
+    struct entity* projectile;
     struct entity player;                           // variable representing the player entity
     int playerY = 0;                                // current Y-coordinate of player
     int playerX = 0;                                // current X-coordinate of player
     player = createEntity(7, 14, spriteP1, stdscr); // fills the player entity with info
+    projectile = (struct entity*) calloc(0, sizeof(struct entity));
 
     drawEntity(player, playerY, playerX);           // draws the player entity for the first time
     
@@ -82,7 +99,10 @@ int main() {
         case 'd':       // moves player right
             playerX++;
             break;
-        
+        case ' ':
+            projectile = (struct entity*)realloc(projectile, sizeof(struct entity));
+            break;
+
         default:
             break;
         };
@@ -91,8 +111,10 @@ int main() {
         clear();                                // clears the screen
         drawEntity(player, playerY, playerX);   // draws the player sprite on the screen
         refresh();                              // refreshes the screen so that everything drawn will show up
+        napms(1);
     }
 
     endwin(); // closes the graphics and restores the terminal
+    free(projectile);
     return 0; // closes the program
 }
