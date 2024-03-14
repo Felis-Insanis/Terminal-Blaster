@@ -18,7 +18,6 @@ void removeFromEntityArrayByI(int index, int *arrayPtr, int length) { // shifts 
     if (tmp == NULL) {
         exit(EXIT_FAILURE);
     }
-    length--;
     arrayPtr = tmp;
 }
 
