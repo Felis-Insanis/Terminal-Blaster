@@ -8,6 +8,7 @@
 #include "enemyStatic.h"        // the sprite of the static enemy type           (unused)
 #include "projectileEnemy.h"    // sprite for a projectile cast by enemies       (WIP)
 #include "projectilePlayer.h"   // sprite for a projectile cast by the player    (WIP)
+#include "projectile.h"         // class PROJECTILE and methods for it
 
 int main() {
     char c;     // stores input as a single ASCII character
@@ -22,16 +23,15 @@ int main() {
     
 
     // WINDOW *playArea = newpad(height, width);
-    struct ENTITY* projectile;
+    struct PROJECTILE projectileHead; // the head of the PROJECTILE linked list
     int nrProjectiles = 0;
     int nrProjectilesRemoved = 0;
     char projRemoved[10];
     char strNrProjectiles[10];
-    char strProjectilesNr[10];
 
     struct ENTITY player;                           // variable representing the player ENTITY
     player = createENT(0, 0, 7, 14, spriteP1, stdscr); // fills the player ENTITY with info
-    projectile = (struct ENTITY*) calloc(0, sizeof(struct ENTITY));
+    projectileHead = createPROJECTILE(NULL, NULL, NULL, NULL, NULL, NULL); // c
 
     drawENT(player);           // draws the player ENTITY for the first time
     
@@ -40,14 +40,7 @@ int main() {
 
         if (nrProjectiles > 0) {
             for (int i = 0; i < nrProjectiles; i++){
-                if (projectile[i].x0 < width){
-                    projectile[i].x0++;
-                } else {
-                    removeIndexENT(i, projectile, nrProjectiles);
-                    nrProjectilesRemoved++;
-                    sprintf(projRemoved, "%d", nrProjectilesRemoved);
-                    beep();
-                }
+                
             }
         }
 
@@ -74,9 +67,6 @@ int main() {
             sprintf(strNrProjectiles, "%d", nrProjectiles);
             mvaddstr(0, width-10, strNrProjectiles);
 
-            projectile = (struct ENTITY*)realloc(projectile, nrProjectiles * sizeof(struct ENTITY)); // IMPORTANT FIX:
-            beep();
-            projectile[nrProjectiles-1] = createENT(player.y0, player.x0, 1, 2, spriteLazer, stdscr);
             break;
 
         default:
@@ -86,21 +76,15 @@ int main() {
         // drawing the new frame
         // clear();            // clears the screen
         drawENT(player);    // draws the player sprite on the screen
-        for (int i = 0; i < nrProjectiles; i++){
-            drawENT(projectile[i]);
-        }
-        sprintf(strNrProjectiles, "%d", nrProjectiles);
-        sprintf(strProjectilesNr, "%d", sizeof(*projectile));
 
+        sprintf(strNrProjectiles, "%d", nrProjectiles);
         mvaddstr(0, width-10, strNrProjectiles);
-        mvaddstr(1, width-10, strProjectilesNr);
         mvaddstr(2, width-10, projRemoved);
 
-        refresh();          // refreshes the screen so that everything drawn will show up
+        refresh();           // refreshes the screen so that everything drawn will show up
         napms(20);           // makes the program wait 1 ms between each frame to prevent overheating
     }
 
     endwin(); // closes the graphics and restores the terminal
-    free(projectile); // clears the memory address of "projectile"
     return 0; // closes the program
 }

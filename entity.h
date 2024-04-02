@@ -43,22 +43,22 @@ void drawENT(struct ENTITY e){ // shortcut for drawing an ENTITY's sprite with a
     } 
 }
 
-void shiftENT(int index, struct ENTITY *arrayPtr, int length) { // shifts elements
-    int i;
-    for (i = index; i < length; i++){
-        arrayPtr[i] = arrayPtr[i+1];
-    }
-}
+// void shiftENT(int index, struct ENTITY *arrayPtr, int length) { // shifts elements
+//     int i;
+//     for (i = index; i < length; i++){
+//         arrayPtr[i] = arrayPtr[i+1];
+//     }
+// }
 
-void removeIndexENT(int index, struct ENTITY *arrayPtr, int length) { // shifts elements, then reallocates
-    struct ENTITY *tmp;
+// void removeIndexENT(int index, struct ENTITY *arrayPtr, int length) { // shifts elements, then reallocates
+//     struct ENTITY *tmp;
 
-    shiftENT(index, arrayPtr, length);
+//     shiftENT(index, arrayPtr, length);
 
-    tmp = realloc(arrayPtr, (length-1) * sizeof(struct ENTITY));
+//     tmp = realloc(arrayPtr, (length-1) * sizeof(struct ENTITY));
 
-    if (tmp == NULL) {
-        exit(EXIT_FAILURE);
-    }
-    arrayPtr = tmp;
-}
+//     if (tmp == NULL) {
+//         exit(EXIT_FAILURE);
+//     }
+//     arrayPtr = tmp;
+// }
