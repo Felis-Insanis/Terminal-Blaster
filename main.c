@@ -16,35 +16,32 @@ int main() {
     
     initscr();              // inititalise the "graphics"
     nodelay(stdscr, TRUE);  // the program now doesn't wait for input each loop
-
-    int height, width;
-    height = getmaxy(stdscr);
+    noecho();
+    int /*height,*/ width;
+    /*height = getmaxy(stdscr);*/
     width  = getmaxx(stdscr);
     
 
     // WINDOW *playArea = newpad(height, width);
-    struct PROJECTILE projectileHead; // the head of the PROJECTILE linked list
+    projectile_t* projectileHead; // the head of the PROJECTILE linked list
     int nrProjectiles = 0;
-    int nrProjectilesRemoved = 0;
     char projRemoved[10];
     char strNrProjectiles[10];
 
     struct ENTITY player;                           // variable representing the player ENTITY
     player = createENT(0, 0, 7, 14, spriteP1, stdscr); // fills the player ENTITY with info
-    projectileHead = createPROJECTILE(NULL, NULL, NULL, NULL, NULL, NULL); // c
+
+    projectileHead = (projectile_t *) malloc(sizeof(projectile_t));
+    projectileHead->next = NULL; // c
 
     drawENT(player);           // draws the player ENTITY for the first time
     
     while (c != 27) {   // game loop, stops when 'esc' is pressed (ASCII character code 27)
         c = getch();    // getting input
 
-        if (nrProjectiles > 0) {
-            for (int i = 0; i < nrProjectiles; i++){
-                
-            }
+        if (projectileHead->next != NULL) {
+            moveProjectiles(projectileHead, stdscr);
         }
-
-        
 
         switch (c){     // handling input
         case 'w':       // moves player up
@@ -63,6 +60,7 @@ int main() {
             player.x0++;
             break;
         case ' ':
+            newProjectile(projectileHead, player.y0, player.x0, 2, 1, spriteLazer, stdscr);
             nrProjectiles ++;
             sprintf(strNrProjectiles, "%d", nrProjectiles);
             mvaddstr(0, width-10, strNrProjectiles);
@@ -74,15 +72,16 @@ int main() {
         };
 
         // drawing the new frame
-        // clear();            // clears the screen
+        clear();           // clears the screen
         drawENT(player);    // draws the player sprite on the screen
+        drawPROJECTILE(projectileHead);
 
         sprintf(strNrProjectiles, "%d", nrProjectiles);
         mvaddstr(0, width-10, strNrProjectiles);
         mvaddstr(2, width-10, projRemoved);
 
         refresh();           // refreshes the screen so that everything drawn will show up
-        napms(20);           // makes the program wait 1 ms between each frame to prevent overheating
+        napms(1);           // makes the program wait 1 ms between each frame to prevent overheating
     }
 
     endwin(); // closes the graphics and restores the terminal

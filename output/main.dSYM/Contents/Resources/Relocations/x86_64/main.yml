@@ -2,14 +2,16 @@
 triple:          'x86_64-apple-darwin'
 binary-path:     '/Users/attilacsonka/Desktop/Repositories/Development/nCurses Arcade/output/main'
 relocations:
-  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _createENT, symObjAddr: 0x0, symBinAddr: 0x100003760, symSize: 0x70 }
-  - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _spriteP1, symObjAddr: 0x7D0, symBinAddr: 0x100008000, symSize: 0x0 }
-  - { offsetInCU: 0x6E, offset: 0x6E, size: 0x8, addend: 0x0, symName: _spriteBloboid, symObjAddr: 0x840, symBinAddr: 0x100008070, symSize: 0x0 }
-  - { offsetInCU: 0x83, offset: 0x83, size: 0x8, addend: 0x0, symName: _spriteGoopProjectile, symObjAddr: 0x8A3, symBinAddr: 0x1000080D3, symSize: 0x0 }
-  - { offsetInCU: 0xA4, offset: 0xA4, size: 0x8, addend: 0x0, symName: _spriteLazer, symObjAddr: 0x8AA, symBinAddr: 0x1000080DA, symSize: 0x0 }
-  - { offsetInCU: 0x13B, offset: 0x13B, size: 0x8, addend: 0x0, symName: _createENT, symObjAddr: 0x0, symBinAddr: 0x100003760, symSize: 0x70 }
-  - { offsetInCU: 0x1B8, offset: 0x1B8, size: 0x8, addend: 0x0, symName: _drawENT, symObjAddr: 0x70, symBinAddr: 0x1000037D0, symSize: 0xD0 }
-  - { offsetInCU: 0x23E, offset: 0x23E, size: 0x8, addend: 0x0, symName: _shiftENT, symObjAddr: 0x140, symBinAddr: 0x1000038A0, symSize: 0x70 }
-  - { offsetInCU: 0x28C, offset: 0x28C, size: 0x8, addend: 0x0, symName: _removeIndexENT, symObjAddr: 0x1B0, symBinAddr: 0x100003910, symSize: 0x60 }
-  - { offsetInCU: 0x2DA, offset: 0x2DA, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x210, symBinAddr: 0x100003970, symSize: 0x5B2 }
+  - { offsetInCU: 0x26, offset: 0x26, size: 0x8, addend: 0x0, symName: _createENT, symObjAddr: 0x0, symBinAddr: 0x100000710, symSize: 0x70 }
+  - { offsetInCU: 0x3F, offset: 0x3F, size: 0x8, addend: 0x0, symName: _spriteP1, symObjAddr: 0x820, symBinAddr: 0x100002000, symSize: 0x0 }
+  - { offsetInCU: 0x6E, offset: 0x6E, size: 0x8, addend: 0x0, symName: _spriteBloboid, symObjAddr: 0x890, symBinAddr: 0x100002070, symSize: 0x0 }
+  - { offsetInCU: 0x83, offset: 0x83, size: 0x8, addend: 0x0, symName: _spriteGoopProjectile, symObjAddr: 0x8F3, symBinAddr: 0x1000020D3, symSize: 0x0 }
+  - { offsetInCU: 0xA4, offset: 0xA4, size: 0x8, addend: 0x0, symName: _spriteLazer, symObjAddr: 0x8FA, symBinAddr: 0x1000020DA, symSize: 0x0 }
+  - { offsetInCU: 0x148, offset: 0x148, size: 0x8, addend: 0x0, symName: _createENT, symObjAddr: 0x0, symBinAddr: 0x100000710, symSize: 0x70 }
+  - { offsetInCU: 0x1C5, offset: 0x1C5, size: 0x8, addend: 0x0, symName: _drawENT, symObjAddr: 0x70, symBinAddr: 0x100000780, symSize: 0xD0 }
+  - { offsetInCU: 0x24B, offset: 0x24B, size: 0x8, addend: 0x0, symName: _drawPROJECTILE, symObjAddr: 0x140, symBinAddr: 0x100000850, symSize: 0xF0 }
+  - { offsetInCU: 0x2DF, offset: 0x2DF, size: 0x8, addend: 0x0, symName: _deletePROJECTILE, symObjAddr: 0x230, symBinAddr: 0x100000940, symSize: 0x80 }
+  - { offsetInCU: 0x33F, offset: 0x33F, size: 0x8, addend: 0x0, symName: _moveProjectiles, symObjAddr: 0x2B0, symBinAddr: 0x1000009C0, symSize: 0xD0 }
+  - { offsetInCU: 0x39B, offset: 0x39B, size: 0x8, addend: 0x0, symName: _newProjectile, symObjAddr: 0x380, symBinAddr: 0x100000A90, symSize: 0xE0 }
+  - { offsetInCU: 0x421, offset: 0x421, size: 0x8, addend: 0x0, symName: _main, symObjAddr: 0x460, symBinAddr: 0x100000B70, symSize: 0x3C0 }
 ...
