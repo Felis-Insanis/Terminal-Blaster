@@ -15,12 +15,16 @@ int main() {
     c = '\0';   // sets a temporary null value as the input so the first iteration in the while loop doesn't bug out
     
     initscr();              // inititalise the "graphics"
+    cbreak();
     nodelay(stdscr, TRUE);  // the program now doesn't wait for input each loop
     noecho();
-    int /*height,*/ width;
-    /*height = getmaxy(stdscr);*/
+    int height, width;
+    height = getmaxy(stdscr);
     width  = getmaxx(stdscr);
     
+    WINDOW * ui = subwin(stdscr, 5, width, 0, 0);
+    WINDOW * stage = subwin(stdscr, height-5, width, 5, 0);
+    nodelay(stage, TRUE);  // the program now doesn't wait for input each loop
 
     // WINDOW *playArea = newpad(height, width);
     projectile_t* projectileHead; // the head of the PROJECTILE linked list
@@ -29,7 +33,7 @@ int main() {
     char strNrProjectiles[10];
 
     struct ENTITY player;                           // variable representing the player ENTITY
-    player = createENT(0, 0, 7, 14, spriteP1, stdscr); // fills the player ENTITY with info
+    player = createENT(1, 1, 7, 14, spriteP1, stage); // fills the player ENTITY with info
 
     projectileHead = (projectile_t *) malloc(sizeof(projectile_t));
     projectileHead->next = NULL; // c
@@ -37,7 +41,7 @@ int main() {
     drawENT(player);           // draws the player ENTITY for the first time
     
     while (c != 27) {   // game loop, stops when 'esc' is pressed (ASCII character code 27)
-        c = getch();    // getting input
+        c = wgetch(stage);    // getting input
 
         if (projectileHead->next != NULL) {
             moveProjectiles(projectileHead, stdscr);
@@ -45,25 +49,40 @@ int main() {
 
         switch (c){     // handling input
         case 'w':       // moves player up
-            player.y0--;
+            if (player.y0 > 1) {
+                player.y0--;
+            }
             break;
 
         case 's':       // moves player down
-            player.y0++;
+            if (player.y0 < height - player.height*2 + 1) {
+                player.y0++;
+            }
             break;
 
         case 'a':       // moves player left
-            player.x0--;
+            if (player.x0 > 1) {
+                player.x0--;
+            }
             break;
 
         case 'd':       // moves player right
-            player.x0++;
+            if (player.x0 < width - player.width - 1) {
+                player.x0++;
+            }
             break;
         case ' ':
-            newProjectile(projectileHead, player.y0, player.x0, 2, 1, spriteLazer, stdscr);
+            newProjectile(projectileHead, TRUE, player.y0 + 1, player.x0 + 14, 2, 1, spriteLazer, stage);
             nrProjectiles ++;
+            newProjectile(projectileHead, TRUE, player.y0 + 5, player.x0 + 14, 2, 1, spriteLazer, stage);
+            nrProjectiles ++;
+            
+            wclear(ui);
+            box(ui, '|', '-');
             sprintf(strNrProjectiles, "%d", nrProjectiles);
-            mvaddstr(0, width-10, strNrProjectiles);
+            mvwaddstr(ui, 1, width-10, strNrProjectiles);
+            mvwaddstr(ui, 2, width-10, projRemoved);
+            wrefresh(ui);
 
             break;
 
@@ -72,18 +91,17 @@ int main() {
         };
 
         // drawing the new frame
-        clear();           // clears the screen
+        wclear(stage);            // clears the screen
         drawENT(player);    // draws the player sprite on the screen
         drawPROJECTILE(projectileHead);
 
-        sprintf(strNrProjectiles, "%d", nrProjectiles);
-        mvaddstr(0, width-10, strNrProjectiles);
-        mvaddstr(2, width-10, projRemoved);
+        box(ui, '|', '-');
+        box(stage, '|', '-');
 
         refresh();           // refreshes the screen so that everything drawn will show up
-        napms(1);           // makes the program wait 1 ms between each frame to prevent overheating
+        napms(20);           // makes the program wait 1 ms between each frame to prevent overheating
     }
-
+    nocbreak();
     endwin(); // closes the graphics and restores the terminal
     return 0; // closes the program
 }

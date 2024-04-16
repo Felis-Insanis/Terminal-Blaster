@@ -3,6 +3,7 @@
 #include <string.h>
 
 typedef struct PROJECTILE { // The top-left corner, dimensions and sprite of a given PROJECTILE, alongside the window it shows up in
+    bool isPP;                  // Wether if the projectile is the player's projectile or not, determines dierction and collision
     int  y0;                    // y-value of top-left corner of the sprite
     int  x0;                    // x-value of top-left corner of the sprite
     int  height;                // height of the sprite (for rendering purposes)
@@ -56,13 +57,26 @@ void moveProjectiles(projectile_t* head, WINDOW* screen) {
     projectile_t* tmp;
 
     while (next != NULL) {
-        if (next->x0+next->width <= getmaxx(screen)){
-            next->x0++;
+        if (next->isPP){
+            if (next->x0+next->width <= getmaxx(screen)){
+                next->x0++;
+            } else {
+                tmp = next->next;
+                free(next);
+                current->next = tmp;
+            }
         } else {
-            tmp = next->next;
-            free(next);
-            current->next = tmp;
+            if (next->x0 >= 1){
+                next->x0--;
+            } else {
+                tmp = next->next;
+                free(next);
+                current->next = tmp;
+            }
         }
+        
+
+
         
         if (current->next != NULL){
             current = current->next;
@@ -73,14 +87,14 @@ void moveProjectiles(projectile_t* head, WINDOW* screen) {
     }
 }
 
-void newProjectile(projectile_t * head, int y0, int x0, int width, int height, char sprite[2], WINDOW* window) {
+void newProjectile(projectile_t * head, bool isPP, int y0, int x0, int width, int height, char sprite[2], WINDOW* window) {
     projectile_t * current = head;
     
     while (current->next != NULL) {
         current = current->next;
     }
-
     current->next = (projectile_t *) malloc(sizeof(projectile_t));
+    current->next->isPP = isPP;
     current->next->y0 = y0;
     current->next->x0 = x0;
     current->next->height = height;
