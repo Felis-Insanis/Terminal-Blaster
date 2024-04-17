@@ -15,7 +15,7 @@ int main() {
     c = '\0';   // sets a temporary null value as the input so the first iteration in the while loop doesn't bug out
     
     initscr();              // inititalise the "graphics"
-    cbreak();
+    cbreak();               // disable line buffering
     nodelay(stdscr, TRUE);  // the program now doesn't wait for input each loop
     noecho();
     int height, width;
@@ -40,7 +40,7 @@ int main() {
 
     drawENT(player);           // draws the player ENTITY for the first time
     
-    while (c != 27) {   // game loop, stops when 'esc' is pressed (ASCII character code 27)
+    while (c != 27) {   // game loop, stops when 'esc' is pressed (ASCII character code 27) (function keys also get interpreted as the escape key)
         c = wgetch(stage);    // getting input
 
         if (projectileHead->next != NULL) {
@@ -48,46 +48,46 @@ int main() {
         }
 
         switch (c){     // handling input
-        case 'w':       // moves player up
-            if (player.y0 > 1) {
-                player.y0--;
-            }
-            break;
+            case 'w':       // moves player up
+                if (player.y0 > 1) {
+                    player.y0--;
+                }
+                break;
 
-        case 's':       // moves player down
-            if (player.y0 < height - player.height*2 + 1) {
-                player.y0++;
-            }
-            break;
+            case 's':       // moves player down
+                if (player.y0 < height - player.height*2 + 1) {
+                    player.y0++;
+                }
+                break;
 
-        case 'a':       // moves player left
-            if (player.x0 > 1) {
-                player.x0--;
-            }
-            break;
+            case 'a':       // moves player left
+                if (player.x0 > 1) {
+                    player.x0--;
+                }
+                break;
 
-        case 'd':       // moves player right
-            if (player.x0 < width - player.width - 1) {
-                player.x0++;
-            }
-            break;
-        case ' ':
-            newProjectile(projectileHead, TRUE, player.y0 + 1, player.x0 + 14, 2, 1, spriteLazer, stage);
-            nrProjectiles ++;
-            newProjectile(projectileHead, TRUE, player.y0 + 5, player.x0 + 14, 2, 1, spriteLazer, stage);
-            nrProjectiles ++;
-            
-            wclear(ui);
-            box(ui, '|', '-');
-            sprintf(strNrProjectiles, "%d", nrProjectiles);
-            mvwaddstr(ui, 1, width-10, strNrProjectiles);
-            mvwaddstr(ui, 2, width-10, projRemoved);
-            wrefresh(ui);
+            case 'd':       // moves player right
+                if (player.x0 < width - player.width - 1) {
+                    player.x0++;
+                }
+                break;
+            case ' ':
+                newProjectile(projectileHead, TRUE, player.y0 + 1, player.x0 + 14, 2, 1, spriteLazer, stage);
+                nrProjectiles ++;
+                newProjectile(projectileHead, TRUE, player.y0 + 5, player.x0 + 14, 2, 1, spriteLazer, stage);
+                nrProjectiles ++;
+                
+                wclear(ui);
+                box(ui, '|', '-');
+                sprintf(strNrProjectiles, "%d", nrProjectiles);
+                mvwaddstr(ui, 1, width-10, strNrProjectiles);
+                mvwaddstr(ui, 2, width-10, projRemoved);
+                wrefresh(ui);
 
-            break;
+                break;
 
-        default:
-            break;
+            default:
+                break;
         };
 
         // drawing the new frame
