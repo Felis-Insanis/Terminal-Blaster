@@ -38,6 +38,9 @@ int main() {
     projectileHead = (projectile_t *) malloc(sizeof(projectile_t));
     projectileHead->next = NULL; // c
 
+    box(ui, '|', '-');
+    box(stage, '|', '-');
+
     drawENT(player);           // draws the player ENTITY for the first time
     
     while (c != 27) {   // game loop, stops when 'esc' is pressed (ASCII character code 27) (function keys also get interpreted as the escape key)
@@ -95,7 +98,6 @@ int main() {
         drawENT(player);    // draws the player sprite on the screen
         drawPROJECTILE(projectileHead);
 
-        box(ui, '|', '-');
         box(stage, '|', '-');
 
         refresh();           // refreshes the screen so that everything drawn will show up

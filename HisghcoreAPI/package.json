@@ -1,0 +1,14 @@
+{
+  "name": "hisghcoreapi",
+  "version": "1.0.0",
+  "description": "backend that handles highscores for the hit game Terminal Arcade",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Felis Insanis",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
+}
